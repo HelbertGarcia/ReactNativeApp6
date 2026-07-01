@@ -4,13 +4,13 @@ import { Ionicons } from '@expo/vector-icons';
 
 export default function AboutScreen() {
   const developerInfo = {
-    name: 'Helber Antonio',
+    name: 'Helbert Garcia Espinal',
     role: 'Desarrollador Full Stack & Mobile',
     bio: 'Apasionado por la creación de soluciones móviles y web de alto rendimiento. Experto en React Native, Expo, Node.js y diseño de interfaces de usuario modernas y accesibles. Disponible para contratación freelance y proyectos de desarrollo de software.',
-    email: 'helber.medina@example.com', // Placeholder for user's actual email, they can customize
+    email: 'helbertg09@gmail.com', // Actualized email
     phone: '+1 (829) 123-4567',        // Placeholder for user's phone
-    github: 'https://github.com/helberantonio', // Placeholder github
-    linkedin: 'https://linkedin.com/in/helberantonio', // Placeholder linkedin
+    github: 'https://github.com/helbertg09', // Actualized github
+    linkedin: 'https://linkedin.com/in/helbertg09', // Actualized linkedin
     location: 'Santo Domingo, República Dominicana'
   };
 
@@ -90,7 +90,7 @@ export default function AboutScreen() {
             </View>
             <View style={styles.contactDetails}>
               <Text style={styles.contactLabel}>GitHub Profile</Text>
-              <Text style={styles.contactValue}>github.com/helberantonio</Text>
+              <Text style={styles.contactValue}>github.com/helbertg09</Text>
             </View>
             <Ionicons name="open-outline" size={18} color="#cbd5e1" />
           </TouchableOpacity>
@@ -105,7 +105,7 @@ export default function AboutScreen() {
             </View>
             <View style={styles.contactDetails}>
               <Text style={styles.contactLabel}>LinkedIn Connect</Text>
-              <Text style={styles.contactValue}>linkedin.com/in/helberantonio</Text>
+              <Text style={styles.contactValue}>linkedin.com/in/helbertg09</Text>
             </View>
             <Ionicons name="open-outline" size={18} color="#cbd5e1" />
           </TouchableOpacity>
