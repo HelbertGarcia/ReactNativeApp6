@@ -8,9 +8,7 @@ export default function AboutScreen() {
     role: 'Desarrollador Full Stack & Mobile',
     bio: 'Apasionado por la creación de soluciones móviles y web de alto rendimiento. Experto en React Native, Expo, Node.js y diseño de interfaces de usuario modernas y accesibles. Disponible para contratación freelance y proyectos de desarrollo de software.',
     email: 'helbertg09@gmail.com', // Actualized email
-    phone: '+1 (829) 123-4567',        // Placeholder for user's phone
     github: 'https://github.com/helbertg09', // Actualized github
-    linkedin: 'https://linkedin.com/in/helbertg09', // Actualized linkedin
     location: 'Santo Domingo, República Dominicana'
   };
 
@@ -65,21 +63,6 @@ export default function AboutScreen() {
             <Ionicons name="chevron-forward" size={18} color="#cbd5e1" />
           </TouchableOpacity>
 
-          {/* Phone */}
-          <TouchableOpacity 
-            style={styles.contactItem} 
-            onPress={() => handleContact('phone', developerInfo.phone)}
-          >
-            <View style={[styles.iconContainer, { backgroundColor: '#dcfce7' }]}>
-              <Ionicons name="call" size={20} color="#16a34a" />
-            </View>
-            <View style={styles.contactDetails}>
-              <Text style={styles.contactLabel}>Teléfono / WhatsApp</Text>
-              <Text style={styles.contactValue}>{developerInfo.phone}</Text>
-            </View>
-            <Ionicons name="chevron-forward" size={18} color="#cbd5e1" />
-          </TouchableOpacity>
-
           {/* GitHub */}
           <TouchableOpacity 
             style={styles.contactItem} 
@@ -95,20 +78,6 @@ export default function AboutScreen() {
             <Ionicons name="open-outline" size={18} color="#cbd5e1" />
           </TouchableOpacity>
 
-          {/* LinkedIn */}
-          <TouchableOpacity 
-            style={styles.contactItem} 
-            onPress={() => handleContact('link', developerInfo.linkedin)}
-          >
-            <View style={[styles.iconContainer, { backgroundColor: '#e0f2fe' }]}>
-              <Ionicons name="logo-linkedin" size={20} color="#0284c7" />
-            </View>
-            <View style={styles.contactDetails}>
-              <Text style={styles.contactLabel}>LinkedIn Connect</Text>
-              <Text style={styles.contactValue}>linkedin.com/in/helbertg09</Text>
-            </View>
-            <Ionicons name="open-outline" size={18} color="#cbd5e1" />
-          </TouchableOpacity>
         </View>
 
         <TouchableOpacity 
