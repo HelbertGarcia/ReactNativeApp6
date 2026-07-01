@@ -96,7 +96,7 @@ export default function MediaScreen() {
     setWpLoading(true);
     setWpError('');
     try {
-      const response = await fetch('https://techcrunch.com/wp-json/wp/v2/posts?per_page=3');
+      const response = await fetch('https://www.eurohoops.net/wp-json/wp/v2/posts?per_page=3');
       const data = await response.json();
       if (Array.isArray(data)) {
         setPosts(data);
@@ -228,12 +228,12 @@ export default function MediaScreen() {
           <View style={styles.cardView}>
             <View style={styles.wordpressHeader}>
               <Image 
-                source={{ uri: 'https://techcrunch.com/wp-content/uploads/2015/02/cropped-techcrunch-logo-icon.png' }}
+                source={{ uri: 'https://www.eurohoops.net/wp-content/uploads/2016/09/cropped-favicon-eurohoops-1-192x192.png' }}
                 style={styles.wpLogo}
               />
               <View>
-                <Text style={styles.wpSiteName}>TechCrunch</Text>
-                <Text style={styles.wpSiteDesc}>Noticias de Tecnología y Startups</Text>
+                <Text style={styles.wpSiteName}>Eurohoops</Text>
+                <Text style={styles.wpSiteDesc}>Noticias de Baloncesto, NBA y Euroliga</Text>
               </View>
             </View>
 
@@ -241,7 +241,7 @@ export default function MediaScreen() {
 
             {wpLoading ? (
               <View style={styles.loadingContainer}>
-                <ActivityIndicator size="large" color="#059669" />
+                <ActivityIndicator size="large" color="#ea580c" />
                 <Text style={styles.loadingText}>Cargando noticias...</Text>
               </View>
             ) : wpError ? (
@@ -266,7 +266,7 @@ export default function MediaScreen() {
                       onPress={() => Linking.openURL(post.link)}
                     >
                       <Text style={styles.postLinkText}>Visitar noticia original</Text>
-                      <Ionicons name="arrow-forward" size={14} color="#059669" />
+                      <Ionicons name="arrow-forward" size={14} color="#ea580c" />
                     </TouchableOpacity>
                   </View>
                 ))}
@@ -475,7 +475,7 @@ const styles = StyleSheet.create({
   wpSiteName: {
     fontSize: 20,
     fontWeight: '800',
-    color: '#059669',
+    color: '#ea580c',
   },
   wpSiteDesc: {
     fontSize: 13,
@@ -520,10 +520,10 @@ const styles = StyleSheet.create({
   postLinkText: {
     fontSize: 13,
     fontWeight: '700',
-    color: '#059669',
+    color: '#ea580c',
   },
   retryButton: {
-    backgroundColor: '#059669',
+    backgroundColor: '#ea580c',
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 8,
