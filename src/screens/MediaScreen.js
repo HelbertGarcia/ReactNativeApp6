@@ -96,7 +96,7 @@ export default function MediaScreen() {
     setWpLoading(true);
     setWpError('');
     try {
-      const response = await fetch('https://www.eurohoops.net/wp-json/wp/v2/posts?per_page=3');
+      const response = await fetch('https://api.allorigins.win/raw?url=https://www.eurohoops.net/wp-json/wp/v2/posts?per_page=3');
       const data = await response.json();
       if (Array.isArray(data)) {
         setPosts(data);
