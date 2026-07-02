@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, ActivityIndicator, Image, Linking } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Audio } from 'expo-av';
+import { useAudioPlayer } from 'expo-audio';
 
 export default function MediaScreen() {
   const [activeTab, setActiveTab] = useState('pokemon'); // 'pokemon' | 'wordpress'
@@ -11,12 +11,15 @@ export default function MediaScreen() {
   const [pokemonData, setPokemonData] = useState(null);
   const [pokeLoading, setPokeLoading] = useState(false);
   const [pokeError, setPokeError] = useState('');
-  const [soundObject, setSoundObject] = useState(null);
+  const [cryUri, setCryUri] = useState(null);
 
   // States for WordPress
   const [posts, setPosts] = useState([]);
   const [wpLoading, setWpLoading] = useState(false);
   const [wpError, setWpError] = useState('');
+
+  // Audio player hook – updates automatically when cryUri changes
+  const player = useAudioPlayer(cryUri ? { uri: cryUri } : null);
 
   // Clean HTML from WordPress excerpts
   const cleanExcerpt = (htmlStr) => {
@@ -44,6 +47,7 @@ export default function MediaScreen() {
     setPokeLoading(true);
     setPokeError('');
     setPokemonData(null);
+    setCryUri(null);
     try {
       const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName.trim().toLowerCase()}`);
       if (response.status === 404) {
@@ -60,36 +64,27 @@ export default function MediaScreen() {
   };
 
   // Play Pokemon Cry sound
-  const playPokemonCry = async () => {
+  const playPokemonCry = useCallback(() => {
     if (!pokemonData || !pokemonData.cries || !pokemonData.cries.latest) {
       alert('Este Pokémon no tiene un sonido registrado.');
       return;
     }
 
     try {
-      // Unload previous sound if exists
-      if (soundObject) {
-        await soundObject.unloadAsync();
-      }
-
-      const { sound } = await Audio.Sound.createAsync(
-        { uri: pokemonData.cries.latest },
-        { shouldPlay: true }
-      );
-      setSoundObject(sound);
-
-      sound.setOnPlaybackStatusUpdate((status) => {
-        if (status.didJustFinish) {
-          sound.unloadAsync();
-          setSoundObject(null);
+      // Set the cry URI – the useAudioPlayer hook will load it automatically
+      setCryUri(pokemonData.cries.latest);
+      // Small delay to allow the player to initialize with the new source
+      setTimeout(() => {
+        if (player) {
+          player.seekTo(0);
+          player.play();
         }
-      });
+      }, 300);
     } catch (e) {
       console.log('Error playing cry sound', e);
-      // Fallback alert
       alert('No se pudo reproducir el sonido en esta plataforma.');
     }
-  };
+  }, [pokemonData, player]);
 
   // Fetch WordPress posts (TechCrunch API)
   const fetchWordPressPosts = async () => {
@@ -109,15 +104,6 @@ export default function MediaScreen() {
       setWpLoading(false);
     }
   };
-
-  // Cleanup sound object on unmount
-  useEffect(() => {
-    return () => {
-      if (soundObject) {
-        soundObject.unloadAsync();
-      }
-    };
-  }, [soundObject]);
 
   // Initial fetches
   useEffect(() => {
