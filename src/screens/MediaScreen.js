@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, ActivityIndicator, Image, Linking } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { useAudioPlayer } from 'expo-audio';
+import { AudioPlayer } from 'expo-audio';
 
 export default function MediaScreen() {
   const [activeTab, setActiveTab] = useState('pokemon'); // 'pokemon' | 'wordpress'
@@ -11,15 +11,14 @@ export default function MediaScreen() {
   const [pokemonData, setPokemonData] = useState(null);
   const [pokeLoading, setPokeLoading] = useState(false);
   const [pokeError, setPokeError] = useState('');
-  const [cryUri, setCryUri] = useState(null);
 
   // States for WordPress
   const [posts, setPosts] = useState([]);
   const [wpLoading, setWpLoading] = useState(false);
   const [wpError, setWpError] = useState('');
 
-  // Audio player hook – updates automatically when cryUri changes
-  const player = useAudioPlayer(cryUri ? { uri: cryUri } : null);
+  // Ref to hold the current audio player instance
+  const playerRef = useRef(null);
 
   // Clean HTML from WordPress excerpts
   const cleanExcerpt = (htmlStr) => {
@@ -47,7 +46,6 @@ export default function MediaScreen() {
     setPokeLoading(true);
     setPokeError('');
     setPokemonData(null);
-    setCryUri(null);
     try {
       const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName.trim().toLowerCase()}`);
       if (response.status === 404) {
@@ -63,28 +61,39 @@ export default function MediaScreen() {
     }
   };
 
-  // Play Pokemon Cry sound
-  const playPokemonCry = useCallback(() => {
+  // Play Pokemon Cry sound using manual AudioPlayer instance
+  const playPokemonCry = async () => {
     if (!pokemonData || !pokemonData.cries || !pokemonData.cries.latest) {
       alert('Este Pokémon no tiene un sonido registrado.');
       return;
     }
 
     try {
-      // Set the cry URI – the useAudioPlayer hook will load it automatically
-      setCryUri(pokemonData.cries.latest);
-      // Small delay to allow the player to initialize with the new source
-      setTimeout(() => {
-        if (player) {
-          player.seekTo(0);
-          player.play();
-        }
-      }, 300);
+      // Release the previous player instance if it exists
+      if (playerRef.current) {
+        playerRef.current.release();
+        playerRef.current = null;
+      }
+
+      // Create a brand new AudioPlayer with the cry URL
+      const newPlayer = new AudioPlayer({ uri: pokemonData.cries.latest });
+      playerRef.current = newPlayer;
+      newPlayer.play();
     } catch (e) {
       console.log('Error playing cry sound', e);
       alert('No se pudo reproducir el sonido en esta plataforma.');
     }
-  }, [pokemonData, player]);
+  };
+
+  // Cleanup player on unmount
+  useEffect(() => {
+    return () => {
+      if (playerRef.current) {
+        playerRef.current.release();
+        playerRef.current = null;
+      }
+    };
+  }, []);
 
   // Fetch WordPress posts (TechCrunch API)
   const fetchWordPressPosts = async () => {
