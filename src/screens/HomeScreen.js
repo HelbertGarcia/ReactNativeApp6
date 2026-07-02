@@ -42,7 +42,7 @@ export default function HomeScreen({ navigation }) {
       </View>
 
       <Image 
-        source={require('../../assets/toolbox.png')} 
+        source={require('../../assets/toolbox.jpg')} 
         style={styles.heroImage} 
         resizeMode="contain"
       />

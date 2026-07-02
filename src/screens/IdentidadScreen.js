@@ -70,21 +70,21 @@ export default function IdentidadScreen() {
     if (age < 30) {
       return {
         label: 'Joven',
-        avatar: require('../../assets/young.png'),
+        avatar: require('../../assets/young.jpg'),
         desc: 'Una etapa llena de energía, aprendizaje y nuevas oportunidades por delante.',
         color: '#f59e0b'
       };
     } else if (age <= 65) {
       return {
         label: 'Adulto',
-        avatar: require('../../assets/adult.png'),
+        avatar: require('../../assets/adult.jpg'),
         desc: 'Una época de estabilidad, desarrollo profesional y madurez personal.',
         color: '#10b981'
       };
     } else {
       return {
         label: 'Anciano',
-        avatar: require('../../assets/elderly.png'),
+        avatar: require('../../assets/elderly.jpg'),
         desc: 'Un tiempo de sabiduría acumulada, tranquilidad y gozo de lo sembrado.',
         color: '#6366f1'
       };
